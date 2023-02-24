@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  python:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: python
+    container_name: python
+    volumes:
+      - ./audio:/app/audio
+      - /app/temp_audio
+      - ./:/app
+    depends_on:
+      - bucket
+  bucket:
+    hostname: bucket
+    container_name: bucket
+    image: minio/minio
+    volumes:
+      - data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=minio
+      - MINIO_ROOT_PASSWORD=minio123
+    command: server /data --console-address ":9001"
+
+volumes:
+  data:

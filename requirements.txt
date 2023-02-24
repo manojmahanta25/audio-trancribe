@@ -1,0 +1,6 @@
+pyannote.audio
+requests
+openai-whisper
+openai
+pydub
+minio
